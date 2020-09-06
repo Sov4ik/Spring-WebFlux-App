@@ -1,7 +1,7 @@
 package com.yellowstone.controller;
 
-
 import com.yellowstone.handler.ProductHandler;
+import com.yellowstone.handler.UserHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +13,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class ProductsEndpointConfig {
+public class UserEndpointConfig {
 
-    private static String PRODUCT = "/product";
+    private static String USER = "/user";
 
     @Bean
-    RouterFunction<ServerResponse> routesProduct(ProductHandler handler) {
-        return route(GET(PRODUCT), handler::all)
-                .andRoute(POST(PRODUCT), handler::create)
-                .andRoute(DELETE(PRODUCT + "/{id}"), handler::deleteById);
+    RouterFunction<ServerResponse> routesUser(UserHandler handler) {
+        return route(POST(USER), handler::createUser);
     }
 }
