@@ -1,5 +1,6 @@
 package com.yellowstone.model;
 
+import com.yellowstone.annotation.AutoCreate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -10,11 +11,14 @@ import org.springframework.data.domain.Persistable;
 @Data
 @EqualsAndHashCode
 @ToString
+@AutoCreate
 public class Product implements Persistable<Integer> {
 
     @Id
     private Integer id;
+
     private String description;
+
     private Double price;
 
     @Transient
