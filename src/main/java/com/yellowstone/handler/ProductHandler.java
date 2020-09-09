@@ -3,6 +3,7 @@ package com.yellowstone.handler;
 
 import com.yellowstone.model.Product;
 import com.yellowstone.service.ProductService;
+import com.yellowstone.service.impl.ProductServiceImpl;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -10,6 +11,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
 import java.util.function.BiFunction;
 
 @Component
@@ -46,7 +48,14 @@ public class ProductHandler {
         return defaultReadResponse.apply(this.productService.delete(id(request)), Product.class);
     }
 
-    private static int id(ServerRequest request) {
-        return Integer.parseInt(request.pathVariable("id"));
+    public Mono<ServerResponse> autoCreate(ServerRequest request){
+        return defaultReadResponse.apply(
+                this.productService
+                    .autoCreateProduct()
+                    .flatMap(product -> Mono.just(product.setAsNew())), Product.class);
+    }
+
+    private static UUID id(ServerRequest request) {
+        return UUID.fromString(request.pathVariable("id"));
     }
 }

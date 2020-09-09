@@ -9,6 +9,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -24,7 +25,10 @@ public class ProductPostProcessor implements BeanPostProcessor {
                 try {
                     for (Field field: bean.getClass().getDeclaredFields()){
 
-                        if (field.getType().isAssignableFrom(String.class)) {
+                        if (field.getType().isAssignableFrom(UUID.class)){
+                            field.setAccessible(true);
+                            field.set(bean, UUID.randomUUID());
+                        } else if (field.getType().isAssignableFrom(String.class)) {
                             field.setAccessible(true);
                             field.set(bean, RandomStringUtils.random(5, true, true));
                         } else if (field.getType().isAssignableFrom(Integer.class)){

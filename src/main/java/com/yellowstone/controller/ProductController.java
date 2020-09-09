@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Controller version
@@ -42,8 +43,13 @@ public class ProductController {
                 this.productService.updateProduct(product);
     }
 
+    @GetMapping("/auto-create")
+    public Mono<Product> autoProduct(){
+        return productService.autoCreateProduct();
+    }
+
     @DeleteMapping("/{id}")
-    public Mono<Void> deleteProduct(@PathVariable int id) {
+    public Mono<Void> deleteProduct(@PathVariable UUID id) {
         return this.productService.deleteProduct(id);
     }
 

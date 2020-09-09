@@ -8,17 +8,17 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 
+import java.util.UUID;
+
 @Data
 @EqualsAndHashCode
 @ToString
 @AutoCreate
-public class Product implements Persistable<Integer> {
+public class Product implements Persistable<UUID> {
 
     @Id
-    private Integer id;
-
+    private UUID id;
     private String description;
-
     private Double price;
 
     @Transient

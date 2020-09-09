@@ -1,29 +1,22 @@
 package com.yellowstone.service;
 
-import com.yellowstone.model.Product;
 import com.yellowstone.model.Usr;
-import com.yellowstone.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
-public class UserService {
+public interface UserService {
 
-    private final UserRepository userRepository;
+     Mono<Usr> updateUser(final  Usr usr);
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+     Mono<Usr> createUser(final Usr usr);
 
-    @Transactional
-    public Mono<Usr> updateUser(final  Usr usr) {
-        return this.userRepository.findById(usr.getId())
-                .flatMap(p -> {
-                    p.setName(usr.getName());
-                    p.setEmail(usr.getEmail());
-                    return this.userRepository.save(p);
-                })
-                .switchIfEmpty(this.userRepository.save(usr.setAsNew()));
-    }
+     Flux<Usr> getAllUser();
+
+     Mono<Void> deleteUser(final UUID id);
+
+     Mono<Usr> delete(UUID id);
 }
