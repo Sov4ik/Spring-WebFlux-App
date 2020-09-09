@@ -5,8 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.util.UUID;
 
 

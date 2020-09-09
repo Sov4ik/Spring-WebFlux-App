@@ -2,30 +2,24 @@ package com.yellowstone.handler;
 
 import com.yellowstone.model.Usr;
 import com.yellowstone.service.UserService;
-import org.reactivestreams.Publisher;
+import com.yellowstone.util.DefaultResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.function.BiFunction;
-
 @Component
 public class UserHandler {
 
     private final UserService userService;
 
-    private final BiFunction<Publisher<?>, Class<?>, Mono<ServerResponse>> defaultReadResponse;
-
-    private final BiFunction<Publisher<?>, String, Mono<ServerResponse>> defaultWriteResponse;
+    private final DefaultResponse defaultResponse;
 
     public UserHandler(UserService userService,
-                       BiFunction<Publisher<?>, Class<?>, Mono<ServerResponse>> defaultReadResponse,
-                       BiFunction<Publisher<?>, String, Mono<ServerResponse>> defaultWriteResponse) {
+                       DefaultResponse defaultResponse) {
         this.userService = userService;
-        this.defaultReadResponse = defaultReadResponse;
-        this.defaultWriteResponse = defaultWriteResponse;
+        this.defaultResponse = defaultResponse;
     }
 
     public Mono<ServerResponse> createUser(ServerRequest request){
@@ -33,6 +27,6 @@ public class UserHandler {
                 .bodyToFlux(Usr.class)
                 .flatMap(userService::updateUser);
 
-        return defaultReadResponse.apply(flux, Usr.class);
+        return defaultResponse.defaultReadResponse().apply(flux, Usr.class);
     }
 }

@@ -13,12 +13,10 @@ import java.util.function.BiFunction;
 @Component
 public class DefaultResponse {
 
-    @Bean
     public BiFunction<Publisher<?>, Class<?>, Mono<ServerResponse>> defaultReadResponse(){
         return (publisher, Class) -> ServerResponse.ok().body(publisher, Class);
     }
 
-    @Bean
     public BiFunction<Publisher<?>, String, Mono<ServerResponse>> defaultWriteResponse(){
         return (publisher, url) ->
                 Mono

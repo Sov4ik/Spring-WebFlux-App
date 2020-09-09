@@ -13,7 +13,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class ProductsEndpointConfig {
 
-    private static String PRODUCT = "/product";
+    private static final String PRODUCT = "/product";
 
     @Bean
     RouterFunction<ServerResponse> routesProduct(ProductHandler handler) {

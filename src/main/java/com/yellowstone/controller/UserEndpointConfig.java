@@ -12,7 +12,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class UserEndpointConfig {
 
-    private static String USER = "/user";
+    private static final String USER = "/user";
 
     @Bean
     RouterFunction<ServerResponse> routesUser(UserHandler handler) {
